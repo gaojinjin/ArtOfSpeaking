@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Samples/Advertisement/4.3.0/UnityAds Example App/Scenes/UnityAdsExample.unity
     guid: 0b05e71623db14446af6380781088410
+  - enabled: 1
+    path: Assets/Scenes/MainUI.unity
+    guid: 79e09668c02f65f4db22643d51d32cf0
   m_configObjects: {}

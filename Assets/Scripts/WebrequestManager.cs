@@ -6,55 +6,41 @@ using UnityEngine.Networking;
 using SimpleJSON;
 using TMPro;
 using System;
+using HTC.UnityPlugin.Utility;
 
-public class WebrequestManager : MonoBehaviour
+public class WebrequestManager : SingletonBehaviour<WebrequestManager>
 {
     public string[] strings;
     public TextMeshProUGUI textMeshPro;
     private string tempUrl;
-    public Button rankingListBut, roleChooseBut;
+    public Button rankingListBut, roleChooseBut,nextBut;
     private bool isMan;
+    public List<string> contents;
+    public GameObject rakingListGo;
     void Start()
     {
         roleChooseBut.onClick.AddListener(() => {
             //角色切换 文本修改
             isMan = !isMan;
-            GetComponentInChildren<TextMeshProUGUI>().text = isMan?"渣男":"绿茶";
-            GetURL(isMan? strings[0] : strings[1]);
+            roleChooseBut.GetComponentInChildren<TextMeshProUGUI>().text = isMan? "绿茶" : "渣男";
+            GetURL(isMan? strings[0] : strings[1], URLType.Single);
         });
         rankingListBut.onClick.AddListener(() =>
         {
-            //排行榜 呼叫创建排行榜
-
+            //排行榜 呼叫创建排行榜  更新内容呼叫列表
+            GetURL(strings[2], URLType.RangkList);
+            
         });
+        nextBut.onClick.AddListener(() => {
+            GetURL(isMan ? strings[0] : strings[1], URLType.Single);
+        });
+        GetURL(isMan ? strings[0] : strings[1], URLType.Single);
     }
-    private void GetURL(string url) {
+    private void GetURL(string url, URLType uRLType) {
         UnityWebRequest unityWebRequest = UnityWebRequest.Get(url);
-        StartCoroutine(RankingList(unityWebRequest,URLType.Single));
+        StartCoroutine(RankingList(unityWebRequest, uRLType));
     }
 
-    /// <summary>
-    /// 解析字符串
-    /// </summary>
-    /// <param name="unityWebRequest">解析连接</param>
-    /// <returns>获取Json文件</returns>
-    private IEnumerator GetUrl(UnityWebRequest unityWebRequest)
-    {
-        yield return unityWebRequest.SendWebRequest();
-        if (unityWebRequest.isHttpError || unityWebRequest.isNetworkError)
-        {
-            Debug.Log(unityWebRequest.error);
-        }
-        else
-        {
-            //Debug.Log(unityWebRequest.downloadHandler.text);
-            //解析字符串
-            string jsonStr = unityWebRequest.downloadHandler.text;
-            JSONNode node = JSON.Parse(jsonStr);
-            string content = node["returnObj"]["content"].Value;
-            textMeshPro.text = content;
-        }
-    }
     private IEnumerator RankingList(UnityWebRequest unityWebRequest, URLType uRLType)
     {
         yield return unityWebRequest.SendWebRequest();
@@ -66,14 +52,24 @@ public class WebrequestManager : MonoBehaviour
         {
             string jsonStr = unityWebRequest.downloadHandler.text;
             JSONNode node = JSON.Parse(jsonStr);
-            List<string> contents = new List<string>();
-            for (int i = 0; i < node["returnObj"].Count; i++)
+            switch (uRLType)
             {
-                contents.Add(node["returnObj"][i]["content"].Value);
-            }
-            foreach (var item in contents)
-            {
-                Debug.Log(item);
+                case URLType.None:
+                    break;
+                case URLType.Single:
+                    string content = node["returnObj"]["content"].Value;
+                    textMeshPro.text = content;
+                    break;
+                case URLType.RangkList:
+                    contents = new List<string>();
+                    for (int i = 0; i < node["returnObj"].Count; i++)
+                    {
+                        contents.Add(node["returnObj"][i]["content"].Value);
+                    }
+                    rakingListGo.SetActive(true);
+                    break;
+                default:
+                    break;
             }
         }
     }
