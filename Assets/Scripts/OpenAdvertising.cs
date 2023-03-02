@@ -13,6 +13,7 @@ public class OpenAdvertising : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     [SerializeField] string _androidGameId;
     [SerializeField] string _iOSGameId;
     [SerializeField] bool _testMode = false;
+    private bool oneTime=false;
     private string _gameId;
 
     void Awake()
@@ -55,7 +56,11 @@ public class OpenAdvertising : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
         if (adUnitId.Equals(_adUnitId))
         {
             // 配置该按钮在单击时调用 ShowAd() 方法：
-            _showAdButton.onClick.AddListener(ShowAd);
+            if (!oneTime)
+            {
+                _showAdButton.onClick.AddListener(ShowAd);
+
+            }
             // 允许用户点击按钮：
             _showAdButton.interactable = true;
         }
@@ -68,6 +73,7 @@ public class OpenAdvertising : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
         _showAdButton.interactable = false;
         // 然后展示广告：
         Advertisement.Show(_adUnitId, this);
+        oneTime = true;
     }
 
     // 实现 Show Listener 的 OnUnityAdsShowComplete 回调方法来判断用户是否获得奖励：
@@ -109,7 +115,7 @@ public class OpenAdvertising : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
         //加载广告
         LoadAd();
         //播放加载广告的视频
-        ShowAd();
+        //ShowAd();
     }
 
     public void OnInitializationFailed(UnityAdsInitializationError error, string message)
