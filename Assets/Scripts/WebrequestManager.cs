@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,18 +16,27 @@ public class WebrequestManager : SingletonBehaviour<WebrequestManager>
     public Button rankingListBut, roleChooseBut,nextBut;
     private bool isMan;
     public List<string> contents;
+    public Sprite seaManSpr, greenGirlSp;
+    public TextMeshProUGUI butText;
     public GameObject rakingListGo;
+    
+    
     void Start()
     {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
         roleChooseBut.onClick.AddListener(() => {
-            //½ÇÉ«ÇÐ»» ÎÄ±¾ÐÞ¸Ä
+            //ï¿½ï¿½É«ï¿½Ð»ï¿½ ï¿½Ä±ï¿½ï¿½Þ¸ï¿½ ä¸­æ–‡ æµ‹è¯•
             isMan = !isMan;
-            roleChooseBut.GetComponentInChildren<TextMeshProUGUI>().text = isMan? "ÂÌ²è" : "ÔüÄÐ";
+            
+            roleChooseBut.GetComponent<Image>().sprite = isMan? seaManSpr : greenGirlSp;
+            // change text
+
+            butText.text = isMan ? "æ¸£ç”·" : "ç»¿èŒ¶";
             GetURL(isMan? strings[0] : strings[1], URLType.Single);
         });
         rankingListBut.onClick.AddListener(() =>
         {
-            //ÅÅÐÐ°ñ ºô½Ð´´½¨ÅÅÐÐ°ñ  ¸üÐÂÄÚÈÝºô½ÐÁÐ±í
+            //ï¿½ï¿½ï¿½Ð°ï¿½ ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð°ï¿½  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ýºï¿½ï¿½ï¿½Ð±ï¿½
             GetURL(strings[2], URLType.RangkList);
             
         });
@@ -35,6 +44,7 @@ public class WebrequestManager : SingletonBehaviour<WebrequestManager>
             GetURL(isMan ? strings[0] : strings[1], URLType.Single);
         });
         GetURL(isMan ? strings[0] : strings[1], URLType.Single);
+        
     }
     private void GetURL(string url, URLType uRLType) {
         UnityWebRequest unityWebRequest = UnityWebRequest.Get(url);
