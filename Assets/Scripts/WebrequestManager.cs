@@ -14,7 +14,7 @@ public class WebrequestManager : SingletonBehaviour<WebrequestManager>
     public TextMeshProUGUI textMeshPro;
     private string tempUrl;
     public Button rankingListBut, roleChooseBut,nextBut;
-    private bool isMan;
+    private bool isMan=true;
     public List<string> contents;
     public Sprite seaManSpr, greenGirlSp;
     public TextMeshProUGUI butText;

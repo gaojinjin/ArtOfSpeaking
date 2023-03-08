@@ -56,11 +56,9 @@ public class OpenAdvertising : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
         if (adUnitId.Equals(_adUnitId))
         {
             // 配置该按钮在单击时调用 ShowAd() 方法：
-            if (!oneTime)
-            {
+            
                 _showAdButton.onClick.AddListener(ShowAd);
 
-            }
             // 允许用户点击按钮：
             _showAdButton.interactable = true;
         }
@@ -69,11 +67,14 @@ public class OpenAdvertising : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     // 实现当用户点击按钮时执行的方法：
     public void ShowAd()
     {
+    if (!oneTime)
+    {
         // 禁用该按钮：
         _showAdButton.interactable = false;
         // 然后展示广告：
         Advertisement.Show(_adUnitId, this);
         oneTime = true;
+            }
     }
 
     // 实现 Show Listener 的 OnUnityAdsShowComplete 回调方法来判断用户是否获得奖励：

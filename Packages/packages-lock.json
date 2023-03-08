@@ -24,6 +24,13 @@
       },
       "url": "https://packages.unity.cn"
     },
+    "com.unity.device-simulator": {
+      "version": "git@github.com:needle-mirror/com.unity.device-simulator.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "8498f19f303f66b45e73017cdba0883f0b6c1e00"
+    },
     "com.unity.ext.nunit": {
       "version": "1.0.6",
       "depth": 1,
