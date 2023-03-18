@@ -2332,10 +2332,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1534000520}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1c6b6395c5d04e63a3969b6e16b6185, type: 3}
+  m_Script: {fileID: 11500000, guid: c55880b1c857f41de8f6e218c826ca66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _showAdButton: {fileID: 1074670785}
+  loadAdButton: {fileID: 1074670785}
   _androidAdUnitId: Rewarded_Android
   _iOSAdUnitId: Rewarded_iOS
   _androidGameId: 5112545
