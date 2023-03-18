@@ -45,7 +45,7 @@ public class OpenAdvertising : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     {
         // 重要！仅在初始化之后再加载内容（在此示例中，初始化在另一个脚本中处理）。
         //Debug.Log("Loading Ad: " + _adUnitId);
-        Advertisement.Load(_adUnitId, this);
+        Advertisement.Load(_adUnitId);
     }
 
     // 如果广告加载成功，请向按钮添加监听器并启用它：
@@ -86,7 +86,7 @@ public class OpenAdvertising : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
             // 给予奖励。
 
             // 加载另一个广告：
-            Advertisement.Load(_adUnitId, this);
+            Advertisement.Load(_adUnitId);
         }
     }
 

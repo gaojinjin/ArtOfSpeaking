@@ -46,7 +46,7 @@ public class UnityAdsManager : MonoBehaviour, IUnityAdsInitializationListener, I
 
     public void LoadRewardedAd()
     {
-        Advertisement.Load(REWARDED_VIDEO_PLACEMENT, this);
+        Advertisement.Load(REWARDED_VIDEO_PLACEMENT);
     }
 
     public void ShowRewardedAd()
@@ -56,7 +56,7 @@ public class UnityAdsManager : MonoBehaviour, IUnityAdsInitializationListener, I
 
     public void LoadNonRewardedAd()
     {
-        Advertisement.Load(VIDEO_PLACEMENT, this);
+        Advertisement.Load(VIDEO_PLACEMENT);
     }
 
     public void ShowNonRewardedAd()
