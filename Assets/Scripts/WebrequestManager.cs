@@ -19,10 +19,15 @@ public class WebrequestManager : SingletonBehaviour<WebrequestManager>
     public Sprite seaManSpr, greenGirlSp;
     public TextMeshProUGUI butText;
     public GameObject rakingListGo;
-    
+    public Button copyBut;
     
     void Start()
     {
+        //复制按钮
+        copyBut.onClick.AddListener(()=>{
+            GUIUtility.systemCopyBuffer = textMeshPro.text;
+            ToastText("复制成功");
+        });
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         roleChooseBut.onClick.AddListener(() => {
             //��ɫ�л� �ı��޸� 中文 测试
@@ -82,6 +87,18 @@ public class WebrequestManager : SingletonBehaviour<WebrequestManager>
                     break;
             }
         }
+    }
+    private void ToastText(string showStr)
+    {
+        AndroidJavaClass UnityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        AndroidJavaObject currentActivity = UnityPlayer.GetStatic<AndroidJavaObject>("currentActivity"); ;
+        AndroidJavaClass Toast = new AndroidJavaClass("android.widget.Toast");
+        AndroidJavaObject context = currentActivity.Call<AndroidJavaObject>("getApplicationContext");
+        currentActivity.Call("runOnUiThread", new AndroidJavaRunnable(() =>
+        {
+            Toast.CallStatic<AndroidJavaObject>("makeText", context, showStr, Toast.GetStatic<int>("LENGTH_SHORT")).Call("show");
+        }
+        ));
     }
 }
 public enum URLType { 
